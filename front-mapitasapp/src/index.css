@@ -15,3 +15,18 @@ code {
 
 
 
+.mapContainer{
+  width: auto;
+  height: 80vh;
+}
+
+.info {
+  background-color: rgba(0, 0, 255, 0.5);
+  border-radius: 30px;
+  color: white;
+  left: 20px;
+  padding: 10px;
+  position: fixed;
+  top: 20px;
+  z-index: 100;
+}
