@@ -28,7 +28,9 @@ export const useMapbox = ( puntoInicial ) => {
 
 
     const agregarMarcador = useCallback( (ev) => {
+
         const { lng, lat } = ev.lngLat;
+        
         const marker = new mapboxgl.Marker();
         marker.id = v4(); 
 
@@ -45,37 +47,36 @@ export const useMapbox = ( puntoInicial ) => {
         marker.on('drag', ({ target }) => {
             const { id } = target;
             const { lng, lat } = target.getLngLat();
-
-            movimientoMarcador.current.next({ id, lng, lat });
-            
+            movimientoMarcador.current.next({ id, lng, lat }); 
         })
 
     },[])
 
-    useEffect(() => {
+
+    useEffect( () => {
         const map = new mapboxgl.Map({
             container: mapaDiv.current,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [ puntoInicial.lng, puntoInicial.lat ],
             zoom: puntoInicial.zoom
         });
+        
         mapa.current = map;
-    }, [ puntoInicial ]);
+    },[ puntoInicial ]);
 
-
-    // Cuando se mueve
+    // Cuando se mueve el mapa
     useEffect(() => {
 
-        mapa.current?.on('move', ()=>{
-            const {lng, lat } = mapa.current.getCenter();
+        mapa.current?.on('move', () => {
+            const { lng, lat } = mapa.current.getCenter();
             setCoords({
                 lng: lng.toFixed(4),
                 lat: lat.toFixed(4),
-                zoom: mapa.current.getZoom().toFixed(2),
+                zoom: mapa.current.getZoom().toFixed(2)
             })
         });
 
-    }, [])
+    },[]);
 
     // Agregar Marcadores/Señalizadores cuando hago click
     useEffect(() => {
